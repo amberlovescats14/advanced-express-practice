@@ -1,13 +1,11 @@
-const express = require("express");
 const uuid = require('uuid')
 const contacts = require('../../data/contacts')
 
-const router = express.Router()
 
-router.get('/', (req,res) => {
-  res.json(contacts)
-})
-router.get('/:id', (req,res) => {
+const list = () => {
+  return contacts
+}
+const show = (id) => {
   const found = contacts.some(contact => contact._id === parseInt(req.params.id))
 
   if(found){
@@ -15,9 +13,9 @@ router.get('/:id', (req,res) => {
   } else {
     res.status(400).json({msg: `No contact with the id ${req.params.id}`})
   }
-})
+}
 
-router.post('/', (req, res) => {
+const add = () => {
   const newContact = {
     _id: uuid.v4(),
     name: req.body.name
@@ -28,7 +26,11 @@ router.post('/', (req, res) => {
   }
 
   contacts.push(newContact);
-  res.json(contacts)
-})
+  return contacts
+}
 
-module.exports = router
+module.export = {
+  list,
+  show,
+  add
+}

@@ -1,14 +1,12 @@
-const express = require("express");
 const uuid = require('uuid')
 const comments = require('../../data/comments')
 
-const router = express.Router()
 
-router.get('/', (req, res) => {
-  res.json(comments)
-})
+const list = () => {
+  return comments
+}
 
-router.get('/:id', (req,res) => {
+const show = (id) => {
   const found = comments.some(comment => comment._id === parseInt(req.params.id))
 
   if(found){
@@ -16,20 +14,26 @@ router.get('/:id', (req,res) => {
   } else {
     res.status(400).json({msg: `No vehicle with the id ${req.params.id}`})
   }
-})
 
-router.post('/', (req, res) => {
+
+}
+
+const add = () => {
   const newComment = {
     _id: uuid.v4(),
-    name: req.body.name
+    body: req.body.body
   }
 
-  if(!newComment.name ) {
-   return res.status(400).json({msg: 'Please include name.'})
+  if(!newComment.body ) {
+   return res.status(400).json({msg: 'Please enter comment.'})
   }
 
   comments.push(newComment);
-  res.json(comments)
-})
+  return comments
+}
 
-module.exports = router
+module.exports = {
+  list,
+  show,
+  add
+}

@@ -1,5 +1,4 @@
 const express = require("express");
-const uuid = require('uuid')
 const path = require('path')
 
 const app = express();
@@ -9,10 +8,10 @@ app.use(express.urlencoded({extended: false}))
 
 app.use(express.static(path.join(__dirname, 'public')))
 //! ROUTES
-app.use('/api/comments', require('./routes/api/comments'))
-app.use('/api/contacts', require('./routes/api/contacts'))
-app.use('/api/products', require('./routes/api/products'))
-app.use('/api/vehicles', require('./routes/api/vehicles'))
+app.use('/routes/commentsRouter', require('./routes/commentsRouter'))
+app.use('/routes/contactsRouter', require('./routes/contactsRouter'))
+app.use('/routes/productsRouter', require('./routes/productsRouter'))
+app.use('/routes/vehiclesRouter', require('./routes/vehiclesRouter'))
 
 
 const port = process.env.PORT || 4001;

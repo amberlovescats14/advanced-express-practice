@@ -1,14 +1,13 @@
-const express = require("express");
 const uuid = require('uuid')
 const vehicles = require('../../data/vehicles')
 
-const router = express.Router()
 
 
-router.get('/', (req, res) => {
-  res.json(vehicles)
-})
-router.get('/:id', (req,res) => {
+const list = () => {
+  return vehicles
+}
+
+const show = (id) => {
   const found = vehicles.some(vehicle => vehicle._id === parseInt(req.params.id))
 
   if(found){
@@ -16,9 +15,9 @@ router.get('/:id', (req,res) => {
   } else {
     res.status(400).json({msg: `No vehicle with the id ${req.params.id}`})
   }
-})
+}
 
-router.post('/', (req, res) => {
+const add = () => {
   const newVehicle = {
     _id: uuid.v4(),
     name: req.body.name
@@ -29,7 +28,12 @@ router.post('/', (req, res) => {
   }
 
   vehicles.push(newVehicle);
-  res.json(vehicles)
-})
+  return vehicles
+}
 
-module.exports = router
+module.exports = {
+  list,
+  show,
+  add
+
+}
