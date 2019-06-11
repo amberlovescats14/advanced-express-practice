@@ -1,18 +1,16 @@
 const express = require("express");
-const { list, show, add } = require('./controller/products')
+const products = require('../controller/products')
 const router = express.Router()
 
 router.get('/', (req,res) => {
-  res.json(products)
+  res.json(products.list())
 })
 
 router.get('/:id', (req,res) => {
-  res.json(products)
+  res.json(products.show(req.params.id))
 })
 
-router.post('/', (req, res) => {
-  res.json(products)
-})
+router.post('/', products.add)
 
 
 
